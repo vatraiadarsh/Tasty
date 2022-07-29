@@ -5,7 +5,7 @@ import [Model] from "../models/[Model].js";
  @route   GET /api/v1/[models]
  @access  Public
 */
-export const get[Models] = async (req, res, next) => {
+export const getAll[Models] = async (req, res, next) => {
     try {
         const [models] = await [Model].find();
         res.status(200).json([models])
@@ -33,7 +33,7 @@ export const get[Model] = async (req, res, next) => {
  @route   POST /api/v1/[model]
  @access  Public
 */
-export const create[Model] = async (req, res, next) => {
+export const add[Model] = async (req, res, next) => {
     const new[Model] = new [Model](req.body);
     try {
         const saved[Model] = await new[Model].save();

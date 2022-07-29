@@ -5,7 +5,7 @@ import Book from "../models/Book.js";
  @route   GET /api/v1/books
  @access  Public
 */
-export const getBooks = async (req, res, next) => {
+export const getAllBooks = async (req, res, next) => {
     try {
         const books = await Book.find();
         res.status(200).json(books)
@@ -33,7 +33,7 @@ export const getBook = async (req, res, next) => {
  @route   POST /api/v1/book
  @access  Public
 */
-export const createBook = async (req, res, next) => {
+export const addBook = async (req, res, next) => {
     const newBook = new Book(req.body);
     try {
         const savedBook = await newBook.save();
