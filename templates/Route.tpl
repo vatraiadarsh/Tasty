@@ -10,7 +10,7 @@ router.post('/[model]', add[Model]);
 router.put('/[model]/:id', update[Model]);
 router.delete('/[model]/:id', delete[Model]);
 router.get('/[models]/:search', search[Model]);
-router.delete('/books', deleteMultiple[Models]);
+router.delete('/[models]', deleteMultiple[Models]);
 
 
 export default router;
