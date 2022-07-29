@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import {  getAllBooks, getBook, addBook, updateBook, deleteBook, searchBook, deleteMultipleBooks } from '../Controllers/BookController.js';
+import { getAllBooks, getBook, addBook, updateBook, deleteBook, searchBook, deleteMultipleBooks } from '../Controllers/BookController.js';
 
 
 router.get('/books', getAllBooks);

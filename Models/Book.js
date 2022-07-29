@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const BOOKSchema = new mongoose.Schema({
+const BookSchema = new mongoose.Schema({
     editMe: {
         type: String,
         required: true,
@@ -8,4 +8,4 @@ const BOOKSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-export default mongoose.model("BOOK", BOOKSchema);
+export default mongoose.model("Book", BookSchema);

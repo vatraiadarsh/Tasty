@@ -56,8 +56,8 @@ function makeModel(modelName) {
     let modelTemplate = fs.readFileSync('./templates/Model.tpl', 'utf8');
 
     // [Book] -> [Model]
-    let modelNameSingularCapitalized = modelName.charAt(0).toUpperCase() + modelName.slice(1);
-    modelTemplate = modelTemplate.replace(/\[Model\]/g, modelNameSingularCapitalized);
+    let modelNameCapitalized = modelName.charAt(0).toUpperCase() + modelName.slice(1);
+    modelTemplate = modelTemplate.replace(/\[Model\]/g, modelNameCapitalized);
 
     if (!fs.existsSync(`./Models`)) {
         fs.mkdirSync(`./Models`);
@@ -89,10 +89,9 @@ if (process.argv.length !== 3) {
 
 } else {
     const modelName = pluralize.singular(process.argv[2].toLowerCase())
-    const modelNameWithCapitalizedFirstLetter = pluralize.singular(process.argv[2].charAt(0).toUpperCase() + process.argv[2].slice(1));
     makeController(modelName);
     makeRoute(modelName);
-    makeModel(modelNameWithCapitalizedFirstLetter);
+    makeModel(modelName);
     appendToRouter(modelName);
     console.log(`✅ Generated ${modelName}Controller.js \r\n✅ Generated ${modelName}Route.js \r\n✅ Generated ${modelName}Model.js \r\n✅ Configured ${modelName}Route to Router.js`);
 }
