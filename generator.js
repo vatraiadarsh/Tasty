@@ -52,7 +52,7 @@ function makeRoute(modelName) {
     fs.writeFileSync(`./Routes/${modelName}Route.js`, routeTemplate);
 };
 
-function makeModel(modelName){
+function makeModel(modelName) {
     let modelTemplate = fs.readFileSync('./templates/Model.tpl', 'utf8');
 
     // [Book] -> [Model]
@@ -67,16 +67,33 @@ function makeModel(modelName){
 }
 
 
+function appendToRouter(modelName) {
+    let routerFile = fs.readFileSync('./router.js', 'utf8');
+    // capitalize first letter of model name
+    let modelNameCapitalized = modelName.charAt(0).toUpperCase() + modelName.slice(1);
+    const routerImport = `import ${modelNameCapitalized}Route from './routes/${modelName}Route.js'`;
+    // append to top of router.js
+    routerFile = routerImport + '\n' + routerFile;
+    fs.writeFileSync('./router.js', routerFile);
+
+    const routerUse = `app.use('/api/v1/', ${modelNameCapitalized}Route);`;
+    routerFile = routerFile.replace('}', routerUse + '\n}');
+    fs.writeFileSync('./router.js', routerFile);
+
+}
+
+
 if (process.argv.length !== 3) {
     console.log('usage: node generator.js [modelName]');
     process.exit(1);
 
 } else {
-    const modelName = process.argv[2].toLowerCase();
-    const modelNameWithCapitalizedFirstLetter = process.argv[2].charAt(0).toUpperCase() + process.argv[2].slice(1);
+    const modelName = pluralize.singular(process.argv[2].toLowerCase())
+    const modelNameWithCapitalizedFirstLetter = pluralize.singular(process.argv[2].charAt(0).toUpperCase() + process.argv[2].slice(1));
     makeController(modelName);
     makeRoute(modelName);
     makeModel(modelNameWithCapitalizedFirstLetter);
-    console.log(`✅ Generated ${modelName}Controller.js \r\n✅ Generated ${modelName}Route.js \r\n✅ Generated ${modelName}Model.js`);
+    appendToRouter(modelName);
+    console.log(`✅ Generated ${modelName}Controller.js \r\n✅ Generated ${modelName}Route.js \r\n✅ Generated ${modelName}Model.js \r\n✅ Configured ${modelName}Route to Router.js`);
 }
 

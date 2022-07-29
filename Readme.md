@@ -2,7 +2,7 @@
 ## _Automates your whole api development process_
 
 
- ✅ Generates following  Controllers
+ ✅ Generates following Controller with all the CRUD operations, searching, sorting and pagination
 
 ```sh
 /**
@@ -13,7 +13,7 @@
 ```
 
 ```sh
- Pagination
+Example Pagination
     "total": 11,
     "perPage": 3,
     "currentPage": 1,
@@ -109,6 +109,17 @@ const [Model]Schema = new mongoose.Schema({
 }, { timestamps: true });
 ```
 
+ ✅ Configures [model]Route to Router.js
+
+```sh
+# base template
+export const router = (app)  => {
+    
+}
+
+
+```
+
 ## Installation
 
 Requires [Node.js](https://nodejs.org/) v10+ to run.
@@ -117,8 +128,15 @@ Install the dependencies and devDependencies and start the server.
 
 ```sh
 node generator.js [modelName]
-node generator.js book
+node generator.js book 
+
+[NOTE]: When the model is provided plural or singular, Upper case or lower case,
+it will be converted to singular Title Case.
 ```
+
+
+
+
 
 
 ## License
