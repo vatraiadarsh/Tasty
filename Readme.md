@@ -69,6 +69,18 @@
 */
 ```
 
+```sh
+/**
+ @desc    Delete many Books by [ids]
+ @route   DELETE /api/v1/books
+ @access  Public
+*/
+ pass the array of ids as body
+    {
+    "ids":["62e37eabc48776dd36f435af","62e37eb5c48776dd36f435b1"]
+    }
+```
+
 
 
  
@@ -81,6 +93,7 @@ router.post('/[model]', add[Model]);
 router.put('/[model]/:id', update[Model]);
 router.delete('/[model]/:id', delete[Model]);
 router.get('/[models]/:search', search[Model]);
+router.delete('/[models]', deleteMany[Models]);
 ```
  
  ✅ Generates following  Models

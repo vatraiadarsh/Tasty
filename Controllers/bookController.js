@@ -144,3 +144,19 @@ export const searchBook = async (req, res, next) => {
 };
 
 
+/**
+ @desc    Delete many Books by [ids]
+ @route   DELETE /api/v1/books
+ @access  Public
+*/
+
+export const deleteMultipleBooks = async (req, res, next) => {
+    try{
+        const ids = req.body.ids;
+        const deletedBooks = await Book.deleteMany({_id: {$in: ids}});
+        res.status(200).json(deletedBooks);
+    }catch(error){
+        res.status(500).json(error);
+    }
+
+}

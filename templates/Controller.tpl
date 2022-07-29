@@ -144,6 +144,19 @@ export const search[Model] = async (req, res, next) => {
 };
 
 
+/**
+ @desc    Delete many [Models] by [ids]
+ @route   DELETE /api/v1/books
+ @access  Public
+*/
 
+export const deleteMultiple[Models] = async (req, res, next) => {
+    try{
+        const ids = req.body.ids;
+        const deleted[Models] = await [Model].deleteMany({_id: {$in: ids}});
+        res.status(200).json(deleted[Models]);
+    }catch(error){
+        res.status(500).json(error);
+    }
 
-
+}
