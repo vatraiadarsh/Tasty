@@ -52,6 +52,19 @@ function makeRoute(modelName) {
     fs.writeFileSync(`./Routes/${modelName}Route.js`, routeTemplate);
 };
 
+function makeModel(modelName){
+    let modelTemplate = fs.readFileSync('./templates/Model.tpl', 'utf8');
+
+    // [Book] -> [Model]
+    let modelNameSingularCapitalized = modelName.charAt(0).toUpperCase() + modelName.slice(1);
+    modelTemplate = modelTemplate.replace(/\[Model\]/g, modelNameSingularCapitalized);
+
+    if (!fs.existsSync(`./Models`)) {
+        fs.mkdirSync(`./Models`);
+    }
+
+    fs.writeFileSync(`./Models/${modelName}Model.js`, modelTemplate);
+}
 
 
 if (process.argv.length !== 3) {
@@ -62,5 +75,7 @@ if (process.argv.length !== 3) {
     const modelName = process.argv[2].toLowerCase();
     makeController(modelName);
     makeRoute(modelName);
-    console.log(`✅ Generated ${modelName}Controller.js \r\n✅ Generated ${modelName}Route.js`);
+    makeModel(modelName);
+    console.log(`✅ Generated ${modelName}Controller.js \r\n✅ Generated ${modelName}Route.js \r\n✅ Generated ${modelName}Model.js`);
 }
+
