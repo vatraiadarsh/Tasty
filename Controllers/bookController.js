@@ -5,10 +5,34 @@ import Book from "../models/Book.js";
  @route   GET /api/v1/books
  @access  Public
 */
+
 export const getAllBooks = async (req, res, next) => {
     try {
-        const books = await Book.find();
-        res.status(200).json(books)
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 3;
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+        const total = await Book.countDocuments();
+
+        const books = await Book.find()
+            .skip(startIndex)
+            .limit(limit);
+        res.status(200).json({
+            data: books,
+            total: total,
+            perPage: limit,
+            currentPage: page,
+            lastPage: Math.ceil(total / limit),
+            firstPageUrl: `http://localhost:3000/api/v1/books?page=1&limit=${limit}`,
+            lastPageUrl: `http://localhost:3000/api/v1/books?page=${Math.ceil(total / limit)}&limit=${limit}`,
+            nextPageUrl: endIndex < total ? `http://localhost:3000/api/v1/books?page=${page + 1}&limit=${limit}` : null,
+            prevPageUrl: startIndex > 0 ? `http://localhost:3000/api/v1/books?page=${page - 1}&limit=${limit}` : null,
+            path: req.originalUrl,
+            from: startIndex + 1,
+            to: endIndex < total ? endIndex : total
+        });
+
+
     } catch (error) {
         res.status(500).json(error);
     }

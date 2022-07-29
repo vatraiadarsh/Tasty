@@ -23,13 +23,11 @@ app.get('/', (req, res) => {
 
 // Routes
 import bookRoute from './routes/bookRoute.js';
-app.use('/api/v1', bookRoute);
+app.use('/api/v1/', bookRoute);
 
 
-
-app.listen(3000, () => {
-    console.log('Express app listening on port 3000!');
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
 
-
-export default app;

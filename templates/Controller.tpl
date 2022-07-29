@@ -5,10 +5,34 @@ import [Model] from "../models/[Model].js";
  @route   GET /api/v1/[models]
  @access  Public
 */
+
 export const getAll[Models] = async (req, res, next) => {
     try {
-        const [models] = await [Model].find();
-        res.status(200).json([models])
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 3;
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+        const total = await [Model].countDocuments();
+
+        const [models] = await [Model].find()
+            .skip(startIndex)
+            .limit(limit);
+        res.status(200).json({
+            data: [models],
+            total: total,
+            perPage: limit,
+            currentPage: page,
+            lastPage: Math.ceil(total / limit),
+            firstPageUrl: `http://localhost:3000/api/v1/[models]?page=1&limit=${limit}`,
+            lastPageUrl: `http://localhost:3000/api/v1/[models]?page=${Math.ceil(total / limit)}&limit=${limit}`,
+            nextPageUrl: endIndex < total ? `http://localhost:3000/api/v1/[models]?page=${page + 1}&limit=${limit}` : null,
+            prevPageUrl: startIndex > 0 ? `http://localhost:3000/api/v1/[models]?page=${page - 1}&limit=${limit}` : null,
+            path: req.originalUrl,
+            from: startIndex + 1,
+            to: endIndex < total ? endIndex : total
+        });
+
+
     } catch (error) {
         res.status(500).json(error);
     }
