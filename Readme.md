@@ -71,8 +71,8 @@
 
 ```sh
 /**
- @desc    Delete many Books by [ids]
- @route   DELETE /api/v1/books
+ @desc    Delete many [Models] by [ids]
+ @route   DELETE /api/v1/[models]
  @access  Public
 */
  pass the array of ids as body
