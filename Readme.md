@@ -123,6 +123,6 @@ node generator.js book
 
 ## License
 
-MIT
+[MIT](https://opensource.org/licenses/MIT).
 
 **Free Software, Hell Yeah!**
