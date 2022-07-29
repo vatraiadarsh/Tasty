@@ -26,7 +26,7 @@ import bookRoute from './routes/bookRoute.js';
 app.use('/api/v1/', bookRoute);
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
