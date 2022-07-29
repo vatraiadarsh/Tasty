@@ -1,3 +1,4 @@
+import logger from "../logger.js";
 import Book from "../models/Book.js";
 
 /**

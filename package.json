@@ -5,7 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js | npx pino-pretty"
   },
   "keywords": [
     "nodejs",
@@ -15,9 +15,15 @@
   "author": "Adarsha Bhattarai",
   "license": "The MIT License",
   "dependencies": {
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "mongoose": "^6.5.0",
     "morgan": "^1.10.0",
+    "pino": "^8.3.1",
     "pluralize": "^8.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19",
+    "pino-pretty": "^8.1.0"
   }
 }
