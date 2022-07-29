@@ -63,7 +63,7 @@ function makeModel(modelName){
         fs.mkdirSync(`./Models`);
     }
 
-    fs.writeFileSync(`./Models/${modelName}Model.js`, modelTemplate);
+    fs.writeFileSync(`./Models/${modelName}.js`, modelTemplate);
 }
 
 
@@ -73,9 +73,10 @@ if (process.argv.length !== 3) {
 
 } else {
     const modelName = process.argv[2].toLowerCase();
+    const modelNameWithCapitalizedFirstLetter = process.argv[2].charAt(0).toUpperCase() + process.argv[2].slice(1);
     makeController(modelName);
     makeRoute(modelName);
-    makeModel(modelName);
+    makeModel(modelNameWithCapitalizedFirstLetter);
     console.log(`✅ Generated ${modelName}Controller.js \r\n✅ Generated ${modelName}Route.js \r\n✅ Generated ${modelName}Model.js`);
 }
 
