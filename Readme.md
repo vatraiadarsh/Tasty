@@ -12,6 +12,21 @@
 */
 ```
 
+```sh
+ Pagination
+    "total": 11,
+    "perPage": 3,
+    "currentPage": 1,
+    "lastPage": 4,
+    "firstPageUrl": "http://localhost:5000/api/v1/books?page=1&limit=3",
+    "lastPageUrl": "http://localhost:5000/api/v1/books?page=4&limit=3",
+    "nextPageUrl": "http://localhost:5000/api/v1/books?page=2&limit=3",
+    "prevPageUrl": null,
+    "path": "/api/v1/books",
+    "from": 1,
+    "to": 3
+```
+
 
 ```sh
 /**
