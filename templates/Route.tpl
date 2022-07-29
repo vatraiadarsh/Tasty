@@ -3,7 +3,7 @@ const router = express.Router();
 
 const [Model] = require('../models/[model]Model');
 
-const { add[Model], delete[Model], getAll[Models], get[Model], update[Model] } = require('../controllers/[Model]Controller');
+const {  getAll[Models], get[Model], add[Model], update[Model], delete[Model] } = require('../Controllers/[Model]Controller');
 
 
 router.get('/[models]', getAll[Models]);

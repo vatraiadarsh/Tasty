@@ -3,7 +3,7 @@ import pluralize from 'pluralize';
 
 
 
- function makeController(modelName) {
+function makeController(modelName) {
     let crudTemplate = fs.readFileSync('./templates/Controller.tpl', 'utf8');
 
     // [book] -> [model]
@@ -44,7 +44,7 @@ function makeRoute(modelName) {
     routeTemplate = routeTemplate.replace(/\[models\]/g, modelNamePluralLowerCase);
     routeTemplate = routeTemplate.replace(/\[Model\]/g, modelNameSingularCapitalized);
     routeTemplate = routeTemplate.replace(/\[Models\]/g, modelNamePluralCapitalized);
-    
+
     if (!fs.existsSync(`./Routes`)) {
         fs.mkdirSync(`./Routes`);
     }
@@ -62,4 +62,5 @@ if (process.argv.length !== 3) {
     const modelName = process.argv[2].toLowerCase();
     makeController(modelName);
     makeRoute(modelName);
+    console.log(`✅ Generated ${modelName}Controller.js \r\n✅ Generated ${modelName}Route.js`);
 }
