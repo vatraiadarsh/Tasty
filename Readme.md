@@ -4,62 +4,74 @@
 
  ✅ Generates following  Controllers
 
-
+```sh
 /**
  @desc    Get all [Models]
  @route   GET /api/v1/[models]?page=[pageNo]&limit=[limit]
  @access  Public
 */
+```
 
 
+```sh
 /**
  @desc    Get a [Model] by id
  @route   GET /api/v1/[model]/:id
  @access  Public
 */
+```
 
+```sh
 /**
  @desc    Create new [Model]
  @route   POST /api/v1/[model]
  @access  Public
 */
+```
 
+```sh
 /**
  @desc    Update a [Model]
  @route   PUT /api/v1/[model]/:id
  @access  Public
 */
+```
 
+```sh
 /**
  @desc    Delete a [Model]
  @route   DELETE /api/v1/[model]/:id
  @access  Public
 */
+```
 
 
+```sh
 /**
  @desc    Search a [Model] by editMe
  @route   GET /api/v1/[models]/:search?page=[pageNo]&limit=[limit]
  @access  Public
 */
+```
+
 
 
  
  ✅ Generates following  Routes
  
-
+```sh
 router.get('/[models]', getAll[Models]);
 router.get('/[model]/:id', get[Model]);
 router.post('/[model]', add[Model]);
 router.put('/[model]/:id', update[Model]);
 router.delete('/[model]/:id', delete[Model]);
 router.get('/[models]/:search', search[Model]);
-
+```
  
  ✅ Generates following  Models
  
  
- 
+```sh
 const [Model]Schema = new mongoose.Schema({
     editMe: {
         type: String,
@@ -67,7 +79,7 @@ const [Model]Schema = new mongoose.Schema({
     },
 
 }, { timestamps: true });
-
+```
 
 ## Installation
 
