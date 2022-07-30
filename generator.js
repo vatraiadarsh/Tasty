@@ -75,7 +75,7 @@ function appendToRouter(modelName) {
     let routerFile = fs.readFileSync('./router.js', 'utf8');
 
     let { modelNameSingularUpperCaseFirst } = transformModel(modelName);
-    const routerImport = `import ${modelNameSingularUpperCaseFirst}Route from './routes/${modelName}Route.js;'`;
+    const routerImport = `import ${modelNameSingularUpperCaseFirst}Route from './routes/${modelName}Route.js';`;
     // append to top of router.js
     routerFile = routerImport + '\n' + routerFile;
     fs.writeFileSync('./router.js', routerFile);

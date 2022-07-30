@@ -17,20 +17,7 @@ export const getAll[Models] = async (req, res, next) => {
         const [models] = await [Model].find()
             .skip(startIndex)
             .limit(limit);
-        res.status(200).json({
-            data: [models],
-            total: total,
-            perPage: limit,
-            currentPage: page,
-            lastPage: Math.ceil(total / limit),
-            firstPageUrl: `http://localhost:5000/api/v1/[models]?page=1&limit=${limit}`,
-            lastPageUrl: `http://localhost:5000/api/v1/[models]?page=${Math.ceil(total / limit)}&limit=${limit}`,
-            nextPageUrl: endIndex < total ? `http://localhost:5000/api/v1/[models]?page=${page + 1}&limit=${limit}` : null,
-            prevPageUrl: startIndex > 0 ? `http://localhost:5000/api/v1/[models]?page=${page - 1}&limit=${limit}` : null,
-            path: req.originalUrl,
-            from: startIndex + 1,
-            to: endIndex < total ? endIndex : total
-        });
+        res.status(200).json(paginate([models], total, limit, page, endIndex, startIndex, req));
 
 
     } catch (error) {
@@ -160,3 +147,21 @@ export const deleteMultiple[Models] = async (req, res, next) => {
     }
 
 }
+
+
+function paginate([models], total, limit, page, endIndex, startIndex, req) {
+    return {
+        data: [models],
+        total: total,
+        perPage: limit,
+        currentPage: page,
+        lastPage: Math.ceil(total / limit),
+        firstPageUrl: `http://localhost:5000/api/v1/[models]?page=1&limit=${limit}`,
+        lastPageUrl: `http://localhost:5000/api/v1/[models]?page=${Math.ceil(total / limit)}&limit=${limit}`,
+        nextPageUrl: endIndex < total ? `http://localhost:5000/api/v1/[models]?page=${page + 1}&limit=${limit}` : null,
+        prevPageUrl: startIndex > 0 ? `http://localhost:5000/api/v1/[models]?page=${page - 1}&limit=${limit}` : null,
+        path: req.originalUrl,
+        from: startIndex + 1,
+        to: endIndex < total ? endIndex : total
+    };
+};
