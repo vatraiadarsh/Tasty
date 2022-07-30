@@ -1,28 +1,23 @@
-import Book from "../models/Book.js";
+import Book from '../models/Book.js';
 
 /**
  @desc    Get all Books
  @route   GET /api/v1/books
  @access  Public
 */
-
 export const getAllBooks = async (req, res, next) => {
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 3;
-        const startIndex = (page - 1) * limit;
-        const endIndex = page * limit;
-        const total = await Book.countDocuments();
+	try {
+		const page = parseInt(req.query.page) || 1;
+		const limit = parseInt(req.query.limit) || 3;
+		const startIndex = (page - 1) * limit;
+		const endIndex = page * limit;
+		const total = await Book.countDocuments();
 
-        const books = await Book.find()
-            .skip(startIndex)
-            .limit(limit);
-        res.status(200).json(paginate(books, total, limit, page, endIndex, startIndex, req));
-
-
-    } catch (error) {
-        res.status(500).json(error);
-    }
+		const books = await Book.find().skip(startIndex).limit(limit);
+		res.status(200).json(paginate(books, total, limit, page, endIndex, startIndex, req));
+	} catch (error) {
+		res.status(500).json(error);
+	}
 };
 
 /**
@@ -31,12 +26,12 @@ export const getAllBooks = async (req, res, next) => {
  @access  Public
 */
 export const getBook = async (req, res, next) => {
-    try {
-        const book = await Book.findById(req.params.id);
-        res.status(200).json(book);
-    } catch (error) {
-        res.status(500).json(error);
-    }
+	try {
+		const book = await Book.findById(req.params.id);
+		res.status(200).json(book);
+	} catch (error) {
+		res.status(500).json(error);
+	}
 };
 
 /**
@@ -45,13 +40,13 @@ export const getBook = async (req, res, next) => {
  @access  Public
 */
 export const addBook = async (req, res, next) => {
-    const newBook = new Book(req.body);
-    try {
-        const savedBook = await newBook.save();
-        res.status(200).json(savedBook);
-    } catch (error) {
-        res.status(500).json(error);
-    }
+	const newBook = new Book(req.body);
+	try {
+		const savedBook = await newBook.save();
+		res.status(200).json(savedBook);
+	} catch (error) {
+		res.status(500).json(error);
+	}
 };
 
 /**
@@ -60,12 +55,12 @@ export const addBook = async (req, res, next) => {
  @access  Public
 */
 export const updateBook = async (req, res, next) => {
-    try {
-        const updatedBook = await Book.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
-        res.status(200).json(updatedBook);
-    } catch (error) {
-        res.status(500).json(error);
-    }
+	try {
+		const updatedBook = await Book.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
+		res.status(200).json(updatedBook);
+	} catch (error) {
+		res.status(500).json(error);
+	}
 };
 
 /**
@@ -74,81 +69,69 @@ export const updateBook = async (req, res, next) => {
  @access  Public
 */
 export const deleteBook = async (req, res, next) => {
-    try {
-        await Book.findByIdAndDelete(req.params.id);
-        res.status(200).json("Book deleted Successfully");
-    } catch (error) {
-        res.status(500).json(error);
-    }
+	try {
+		await Book.findByIdAndDelete(req.params.id);
+		res.status(200).json('Book deleted Successfully');
+	} catch (error) {
+		res.status(500).json(error);
+	}
 };
-
-
-
 
 /**
  @desc    Search a Book by editMe
  @route   GET /api/v1/books/:search
  @access  Public
 */
-
 export const searchBook = async (req, res, next) => {
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 3;
-        const startIndex = (page - 1) * limit;
-        const endIndex = page * limit;
-        const search = req.params.search;
-        const total = await Book.countDocuments({
-            $or: [
-                { editMe: { $regex: search, $options: 'i' } }
-            ]
-        });
+	try {
+		const page = parseInt(req.query.page) || 1;
+		const limit = parseInt(req.query.limit) || 3;
+		const startIndex = (page - 1) * limit;
+		const endIndex = page * limit;
+		const search = req.params.search;
+		const total = await Book.countDocuments({
+			$or: [{ editMe: { $regex: search, $options: 'i' } }],
+		});
 
-        const books = await Book.find({
-            $or: [
-                { editMe: { $regex: search, $options: 'i' } }
-            ]
-        })
-            .skip(startIndex)
-            .limit(limit);
-        res.status(200).json(paginate(books, total, limit, page, endIndex, startIndex, req));
-    } catch (error) {
-        res.status(500).json(error);
-    }
+		const books = await Book.find({
+			$or: [{ editMe: { $regex: search, $options: 'i' } }],
+		})
+			.skip(startIndex)
+			.limit(limit);
+		res.status(200).json(paginate(books, total, limit, page, endIndex, startIndex, req));
+	} catch (error) {
+		res.status(500).json(error);
+	}
 };
-
 
 /**
  @desc    Delete many Books by [ids]
  @route   DELETE /api/v1/books
  @access  Public
 */
-
 export const deleteMultipleBooks = async (req, res, next) => {
-    try{
-        const ids = req.body.ids;
-        const deletedBooks = await Book.deleteMany({_id: {$in: ids}});
-        res.status(200).json(deletedBooks);
-    }catch(error){
-        res.status(500).json(error);
-    }
-
-}
-
+	try {
+		const ids = req.body.ids;
+		const deletedBooks = await Book.deleteMany({ _id: { $in: ids } });
+		res.status(200).json(deletedBooks);
+	} catch (error) {
+		res.status(500).json(error);
+	}
+};
 
 function paginate(books, total, limit, page, endIndex, startIndex, req) {
-    return {
-        data: books,
-        total: total,
-        perPage: limit,
-        currentPage: page,
-        lastPage: Math.ceil(total / limit),
-        firstPageUrl: `http://localhost:5000/api/v1/books?page=1&limit=${limit}`,
-        lastPageUrl: `http://localhost:5000/api/v1/books?page=${Math.ceil(total / limit)}&limit=${limit}`,
-        nextPageUrl: endIndex < total ? `http://localhost:5000/api/v1/books?page=${page + 1}&limit=${limit}` : null,
-        prevPageUrl: startIndex > 0 ? `http://localhost:5000/api/v1/books?page=${page - 1}&limit=${limit}` : null,
-        path: req.originalUrl,
-        from: startIndex + 1,
-        to: endIndex < total ? endIndex : total
-    };
-};
+	return {
+		data: books,
+		total: total,
+		perPage: limit,
+		currentPage: page,
+		lastPage: Math.ceil(total / limit),
+		firstPageUrl: `http://localhost:5000/api/v1/books?page=1&limit=${limit}`,
+		lastPageUrl: `http://localhost:5000/api/v1/books?page=${Math.ceil(total / limit)}&limit=${limit}`,
+		nextPageUrl: endIndex < total ? `http://localhost:5000/api/v1/books?page=${page + 1}&limit=${limit}` : null,
+		prevPageUrl: startIndex > 0 ? `http://localhost:5000/api/v1/books?page=${page - 1}&limit=${limit}` : null,
+		path: req.originalUrl,
+		from: startIndex + 1,
+		to: endIndex < total ? endIndex : total,
+	};
+}

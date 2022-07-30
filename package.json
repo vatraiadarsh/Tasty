@@ -5,7 +5,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon app.js | npx pino-pretty"
+    "start": "npm run format && nodemon app.js | npx pino-pretty",
+    "format": "prettier --write controllers/ models/ routes/ app.js database.js generator.js logger.js router.js server.js"
   },
   "keywords": [
     "nodejs",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.19",
-    "pino-pretty": "^8.1.0"
+    "pino-pretty": "^8.1.0",
+    "prettier": "2.7.1"
   }
 }

@@ -1,11 +1,10 @@
-import [Model] from "../models/[Model].js";
+import [Model] from '../models/[Model].js';
 
 /**
  @desc    Get all [Models]
  @route   GET /api/v1/[models]
  @access  Public
 */
-
 export const getAll[Models] = async (req, res, next) => {
     try {
         const page = parseInt(req.query.page) || 1;
@@ -76,7 +75,7 @@ export const update[Model] = async (req, res, next) => {
 export const delete[Model] = async (req, res, next) => {
     try {
         await [Model].findByIdAndDelete(req.params.id);
-        res.status(200).json("[Model] deleted Successfully");
+        res.status(200).json('[Model] deleted Successfully');
     } catch (error) {
         res.status(500).json(error);
     }
@@ -90,7 +89,6 @@ export const delete[Model] = async (req, res, next) => {
  @route   GET /api/v1/[models]/:search
  @access  Public
 */
-
 export const search[Model] = async (req, res, next) => {
     try {
         const page = parseInt(req.query.page) || 1;
@@ -117,13 +115,11 @@ export const search[Model] = async (req, res, next) => {
     }
 };
 
-
 /**
  @desc    Delete many [Models] by [ids]
  @route   DELETE /api/v1/[models]
  @access  Public
 */
-
 export const deleteMultiple[Models] = async (req, res, next) => {
     try{
         const ids = req.body.ids;
@@ -134,7 +130,6 @@ export const deleteMultiple[Models] = async (req, res, next) => {
     }
 
 }
-
 
 function paginate([models], total, limit, page, endIndex, startIndex, req) {
     return {

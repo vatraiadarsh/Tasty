@@ -1,7 +1,8 @@
-import express from "express";
+import express from 'express';
 const router = express.Router();
 
-import {  getAll[Models], get[Model], add[Model], update[Model], delete[Model], search[Model], deleteMultiple[Models] } from '../Controllers/[Model]Controller.js';
+import {  getAll[Models], get[Model], add[Model], update[Model], delete[Model], search[Model], deleteMultiple[Models] } 
+from '../Controllers/[Model]Controller.js';
 
 
 router.get('/[models]', getAll[Models]);

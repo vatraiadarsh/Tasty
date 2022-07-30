@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const [Model]Schema = new mongoose.Schema({
     editMe: {
@@ -8,4 +8,4 @@ const [Model]Schema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-export default mongoose.model("[Model]", [Model]Schema);
+export default mongoose.model('[Model]', [Model]Schema);

@@ -1,11 +1,13 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const BookSchema = new mongoose.Schema({
-    editMe: {
-        type: String,
-        required: true,
-    },
+const BookSchema = new mongoose.Schema(
+	{
+		editMe: {
+			type: String,
+			required: true,
+		},
+	},
+	{ timestamps: true }
+);
 
-}, { timestamps: true });
-
-export default mongoose.model("Book", BookSchema);
+export default mongoose.model('Book', BookSchema);
