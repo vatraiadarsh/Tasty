@@ -134,7 +134,9 @@ node generator.js book
 it will be converted to singular Title Case.
 ```
 
+Creating a Hospital Management System - now just edit mongoose Schemas 
 
+![image](https://user-images.githubusercontent.com/33037244/181863857-b8cc1e21-3db4-4820-822b-3af38f5a2fe5.png)
 
 
 
@@ -144,3 +146,11 @@ it will be converted to singular Title Case.
 [MIT](https://opensource.org/licenses/MIT).
 
 **Free Software, Hell Yeah!**
+
+## under development
+
+TODO:
+- Able to add mongoose fields from commandline.
+- Able to handle mongoose relationship to perform crud operations from commandline
+- generate a frontend client to perform all operations from browser
+- ok! let me finish these first...
