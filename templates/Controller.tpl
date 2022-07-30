@@ -120,7 +120,7 @@ export const search[Model] = async (req, res, next) => {
 
 /**
  @desc    Delete many [Models] by [ids]
- @route   DELETE /api/v1/books
+ @route   DELETE /api/v1/[models]
  @access  Public
 */
 
