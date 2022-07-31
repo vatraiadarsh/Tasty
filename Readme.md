@@ -1,5 +1,8 @@
 # Express js custom mvc framework
-## _Automates your whole api development process_
+## _Automates your whole api development process here's how_
+
+
+[github.webm](https://user-images.githubusercontent.com/33037244/182007272-d2777318-a22f-4eb6-895c-3afb46aca963.webm)
 
 
  ✅ Generates following Controller with all the CRUD operations, searching, sorting and pagination
