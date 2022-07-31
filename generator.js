@@ -91,11 +91,7 @@ function appendToRouter(modelName) {
 	routerFile = routerFile.replace('}', routerUse + '\n}');
 	fs.writeFileSync('./router.js', routerFile);
 }
-
-if (process.argv.length !== 3) {
-	console.log('usage: node generator.js [modelName]');
-	process.exit(1);
-} else {
+if (process.argv.length === 3) {
 	const modelName = pluralize.singular(process.argv[2].toLowerCase());
 	const { modelNameSingularUpperCaseFirst } = transformModel(modelName);
 	makeController(modelName);
@@ -103,9 +99,28 @@ if (process.argv.length !== 3) {
 	makeModel(modelName);
 	appendToRouter(modelName);
 	console.log(`
-    \x1b[32m✔\x1b[0m Generated ${modelName}Controller.js
-    \x1b[32m✔\x1b[0m Generated ${modelName}Route.js
-    \x1b[32m✔\x1b[0m Generated ${modelNameSingularUpperCaseFirst}.js
-    \x1b[32m✔\x1b[0m Configured ${modelName}Route to Router.js
-    `);
+	\x1b[32m✔\x1b[0m Generated ${modelName}Controller.js
+	\x1b[32m✔\x1b[0m Generated ${modelName}Route.js
+	\x1b[32m✔\x1b[0m Generated ${modelNameSingularUpperCaseFirst}.js
+	\x1b[32m✔\x1b[0m Configured ${modelName}Route to Router.js
+	`);
+} else if (process.argv.length > 3) {
+	process.argv.slice(2).forEach((modelName) => {
+		const { modelNameSingularUpperCaseFirst } = transformModel(modelName);
+		makeController(modelName);
+		makeRoute(modelName);
+		makeModel(modelName);
+		appendToRouter(modelName);
+		console.log(`
+		\x1b[32m✔\x1b[0m Generated ${modelName}Controller.js
+		\x1b[32m✔\x1b[0m Generated ${modelName}Route.js
+		\x1b[32m✔\x1b[0m Generated ${modelNameSingularUpperCaseFirst}.js
+		\x1b[32m✔\x1b[0m Configured ${modelName}Route to Router.js
+		`);
+	});
+} else {
+	console.log('usage: node generator.js [modelName]');
+	console.log('usage: node generator.js [modelName] [modelName] [modelName] ...');
+	process.exit(1);
 }
+
