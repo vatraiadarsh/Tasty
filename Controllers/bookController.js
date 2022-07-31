@@ -98,7 +98,7 @@ export const searchBook = async (req, res, next) => {
 		})
 			.skip(startIndex)
 			.limit(limit);
-		res.status(200).json(paginate(books, total, limit, page, endIndex, startIndex, req));
+		res.status(200).json(paginateAfterSearch(books, total, search, limit, page, endIndex, startIndex, req));
 	} catch (error) {
 		res.status(500).json(error);
 	}
@@ -130,6 +130,24 @@ function paginate(books, total, limit, page, endIndex, startIndex, req) {
 		lastPageUrl: `http://localhost:5000/api/v1/books?page=${Math.ceil(total / limit)}&limit=${limit}`,
 		nextPageUrl: endIndex < total ? `http://localhost:5000/api/v1/books?page=${page + 1}&limit=${limit}` : null,
 		prevPageUrl: startIndex > 0 ? `http://localhost:5000/api/v1/books?page=${page - 1}&limit=${limit}` : null,
+		path: req.originalUrl,
+		from: startIndex + 1,
+		to: endIndex < total ? endIndex : total,
+	};
+}
+
+function paginateAfterSearch(books, total, search, limit, page, endIndex, startIndex, req) {
+	return {
+		data: books,
+		total: total,
+		perPage: limit,
+		currentPage: page,
+		lastPage: Math.ceil(total / limit),
+		firstPageUrl: `http://localhost:5000/api/v1/books/${search}?page=1&limit=${limit}`,
+		lastPageUrl: `http://localhost:5000/api/v1/books/${search}?page=${Math.ceil(total / limit)}&limit=${limit}`,
+		nextPageUrl:
+			endIndex < total ? `http://localhost:5000/api/v1/books/${search}?page=${page + 1}&limit=${limit}` : null,
+		prevPageUrl: startIndex > 0 ? `http://localhost:5000/api/v1/books/${search}?page=${page - 1}&limit=${limit}` : null,
 		path: req.originalUrl,
 		from: startIndex + 1,
 		to: endIndex < total ? endIndex : total,

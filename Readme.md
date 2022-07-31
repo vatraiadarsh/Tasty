@@ -1,11 +1,10 @@
 # Express js custom mvc framework
-## _Automates your whole api development process here's how_
 
+## _Automates your whole api development process here's how_
 
 [github.webm](https://user-images.githubusercontent.com/33037244/182007272-d2777318-a22f-4eb6-895c-3afb46aca963.webm)
 
-
- ✅ Generates following Controller with all the CRUD operations, searching, sorting and pagination
+✅ Generates following Controller with all the CRUD operations, searching, sorting and pagination
 
 ```sh
 /**
@@ -29,7 +28,6 @@ Example Pagination
     "from": 1,
     "to": 3
 ```
-
 
 ```sh
 /**
@@ -63,7 +61,6 @@ Example Pagination
 */
 ```
 
-
 ```sh
 /**
  @desc    Search a [Model] by editMe
@@ -84,11 +81,8 @@ Example Pagination
     }
 ```
 
+✅ Generates following Routes
 
-
- 
- ✅ Generates following  Routes
- 
 ```sh
 router.get('/[models]', getAll[Models]);
 router.get('/[model]/:id', get[Model]);
@@ -98,10 +92,9 @@ router.delete('/[model]/:id', delete[Model]);
 router.get('/[models]/:search', search[Model]);
 router.delete('/[models]', deleteMany[Models]);
 ```
- 
- ✅ Generates following  Models
- 
- 
+
+✅ Generates following Models
+
 ```sh
 const [Model]Schema = new mongoose.Schema({
     editMe: {
@@ -112,12 +105,12 @@ const [Model]Schema = new mongoose.Schema({
 }, { timestamps: true });
 ```
 
- ✅ Configures [model]Route to Router.js
+✅ Configures [model]Route to Router.js
 
 ```sh
 # base template
 export const router = (app)  => {
-    
+
 }
 
 
@@ -131,18 +124,15 @@ Install the dependencies and devDependencies and start the server.
 
 ```sh
 node generator.js [modelName]
-node generator.js book 
+node generator.js book
 
 [NOTE]: When the model is provided plural or singular, Upper case or lower case,
 it will be converted to singular Title Case.
 ```
 
-Creating a Hospital Management System - now just edit mongoose Schemas 
+Creating a Hospital Management System - now just edit mongoose Schemas
 
 ![image](https://user-images.githubusercontent.com/33037244/181863857-b8cc1e21-3db4-4820-822b-3af38f5a2fe5.png)
-
-
-
 
 ## License
 
@@ -153,6 +143,7 @@ Creating a Hospital Management System - now just edit mongoose Schemas
 ## under development
 
 TODO:
+
 - Able to add mongoose fields from commandline.
 - Able to handle mongoose relationship to perform crud operations from commandline
 - generate a frontend client to perform all operations from browser

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "npm run format && nodemon app.js | npx pino-pretty",
-    "format": "prettier --write controllers/ models/ routes/ app.js database.js generator.js logger.js router.js server.js"
+    "format": "prettier --write controllers/ models/ routes/ app.js database.js generator.js logger.js router.js server.js Readme.md"
   },
   "keywords": [
     "nodejs",
@@ -14,7 +14,7 @@
     "mvc"
   ],
   "author": "Adarsha Bhattarai",
-  "license": "The MIT License",
+  "license": "MIT",
   "dependencies": {
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
