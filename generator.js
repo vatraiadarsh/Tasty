@@ -91,6 +91,7 @@ function appendToRouter(modelName) {
 	routerFile = routerFile.replace('}', routerUse + '\n}');
 	fs.writeFileSync('./router.js', routerFile);
 }
+
 if (process.argv.length === 3) {
 	const modelName = pluralize.singular(process.argv[2].toLowerCase());
 	const { modelNameSingularUpperCaseFirst } = transformModel(modelName);
@@ -105,8 +106,8 @@ if (process.argv.length === 3) {
 	\x1b[32m✔\x1b[0m Configured ${modelName}Route to Router.js
 	`);
 } else if (process.argv.length > 3) {
-	process.argv.slice(2).forEach((modelName) => {
-		const { modelNameSingularUpperCaseFirst } = transformModel(modelName);
+	const modelNames = process.argv.slice(2).map((modelName) => pluralize.singular(modelName.toLowerCase()));
+	modelNames.forEach((modelName) => {
 		makeController(modelName);
 		makeRoute(modelName);
 		makeModel(modelName);
@@ -114,7 +115,7 @@ if (process.argv.length === 3) {
 		console.log(`
 		\x1b[32m✔\x1b[0m Generated ${modelName}Controller.js
 		\x1b[32m✔\x1b[0m Generated ${modelName}Route.js
-		\x1b[32m✔\x1b[0m Generated ${modelNameSingularUpperCaseFirst}.js
+		\x1b[32m✔\x1b[0m Generated ${modelName}Model.js
 		\x1b[32m✔\x1b[0m Configured ${modelName}Route to Router.js
 		`);
 	});
@@ -123,4 +124,3 @@ if (process.argv.length === 3) {
 	console.log('usage: node generator.js [modelName] [modelName] [modelName] ...');
 	process.exit(1);
 }
-
