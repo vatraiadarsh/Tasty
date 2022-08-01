@@ -1,0 +1,4 @@
+[fieldName]: {
+    type: [fieldType],
+    [required]
+},

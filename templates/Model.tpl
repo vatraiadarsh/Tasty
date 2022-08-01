@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
 const [Model]Schema = new mongoose.Schema({
-    editMe: {
-        type: String,
-        required: true,
+    [fieldName]: {
+        type: [fieldType],
+        [required]
     },
 
 }, { timestamps: true });

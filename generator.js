@@ -1,5 +1,7 @@
 import fs from 'fs';
 import pluralize from 'pluralize';
+import prompt from 'prompt';
+prompt.start();
 
 function transformModel(modelName) {
 	// [book] -> [model]
@@ -65,7 +67,9 @@ function makeRoute(modelName) {
 	fs.writeFileSync(`./Routes/${modelName}Route.js`, routeTemplate);
 }
 
-function makeModel(modelName) {
+// make this function synchronous
+
+async function makeModel(modelName) {
 	let modelTemplate = fs.readFileSync('./templates/Model.tpl', 'utf8');
 
 	let { modelNameSingularUpperCaseFirst } = transformModel(modelName);
@@ -76,6 +80,91 @@ function makeModel(modelName) {
 	}
 
 	fs.writeFileSync(`./Models/${modelNameSingularUpperCaseFirst}.js`, modelTemplate);
+
+	const fields = [
+		{
+			name: 'fieldName',
+			message: 'What is the name of the field? (ex. name, age)',
+			required: true,
+			validator: /^[a-zA-Z]+$/,
+			warning: 'Name must contain only letters',
+		},
+		{
+			name: 'fieldType',
+			message: 'What is the type of the field? (ex. String, Number)',
+			required: true,
+			validator: /^[a-zA-Z]+$/,
+			warning: 'Type must contain only letters',
+		},
+		{
+			name: 'required',
+			message: 'Is the field required? (yes/no)',
+			required: true,
+			validator: /^(yes|no)$/,
+			warning: 'Please enter yes or no',
+		},
+	];
+
+	prompt.get(fields, (err, result) => {
+		if (err) {
+			console.log(err);
+		} else {
+			// add the field to the model
+			addFieldToModel(modelName, result.fieldName, result.fieldType, result.required);
+			printStatement(modelName);
+		}
+	});
+}
+
+function addFieldToModel(modelName, fieldName, fieldType, required) {
+	let modelTemplate = fs.readFileSync(`./Models/${modelName}.js`, 'utf8');
+	let fieldNameUpperCaseFirst = fieldName.charAt(0).toUpperCase() + fieldName.slice(1).toLowerCase();
+	let fieldTypeUpperCaseFirst = fieldType.charAt(0).toUpperCase() + fieldType.slice(1).toLowerCase();
+	let requiredLowerCase = required.toLowerCase();
+
+	modelTemplate = modelTemplate.replace(/\[fieldName\]/g, fieldNameUpperCaseFirst);
+	modelTemplate = modelTemplate.replace(/\[fieldType\]/g, fieldTypeUpperCaseFirst);
+
+	if (requiredLowerCase === 'yes' || requiredLowerCase === 'y') {
+		modelTemplate = modelTemplate.replace(/\[required\]/g, 'required:true');
+	} else {
+		modelTemplate = modelTemplate.replace(/\[required\]/g, '');
+	}
+	fs.writeFileSync(`./Models/${modelName}.js`, modelTemplate);
+
+	// const field = [
+	// 	{
+	// 		name: 'addAnotherField',
+	// 		message: 'Would you like to add another field to the model? (yes/no)',
+	// 		required: true,
+	// 		validator: /^(yes|no)$/,
+	// 		warning: 'Please enter yes or no',
+	// 	},
+	// ];
+	// prompt.get(field, (err, result) => {
+	// 	if (err) {
+	// 		console.log(err);
+	// 	} else {
+	// 		if (result.addAnotherField === 'yes' || result.addAnotherField === 'y') {
+	// 			let addFieldTemplate = fs.readFileSync('./templates/AddField.tpl', 'utf8');
+
+	// 			addFieldTemplate = addFieldTemplate.replace(/\[fieldName\]/g, fieldNameUpperCaseFirst);
+	// 			addFieldTemplate = addFieldTemplate.replace(/\[fieldType\]/g, fieldTypeUpperCaseFirst);
+
+	// 			if (requiredLowerCase === 'yes' || requiredLowerCase === 'y') {
+	// 				addFieldTemplate = addFieldTemplate.replace(/\[required\]/g, 'required:true');
+	// 			} else {
+	// 				addFieldTemplate = addFieldTemplate.replace(/\[required\]/g, '');
+	// 			}
+
+	// 			fs.appendFileSync(`./Models/${modelName}.js`, addFieldTemplate);
+
+	// 		} else {
+	// 			console.log('bye!');
+	// 		}
+	// 	}
+	// }
+	// );
 }
 
 function appendToRouter(modelName) {
@@ -109,11 +198,10 @@ function printStatement(modelName) {
 }
 
 function automate(modelName) {
+	makeModel(modelName);
 	makeController(modelName);
 	makeRoute(modelName);
-	makeModel(modelName);
 	appendToRouter(modelName);
-	printStatement(modelName);
 }
 
 if (process.argv.length === 3) {
