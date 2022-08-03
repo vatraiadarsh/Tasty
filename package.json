@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "npm run format && nodemon app.js | npx pino-pretty",
-    "format": "prettier --write controllers/ models/ routes/ app.js database.js generator.js logger.js router.js server.js Readme.md",
-    "lint": "eslint --ext .js controllers/ models/ routes/ app.js database.js generator.js logger.js router.js server.js"
+    "format": "prettier --write controllers/ validators/ models/ routes/ app.js database.js generator.js logger.js router.js server.js Readme.md",
+    "lint": "eslint --ext .js controllers/ validators/ models/ routes/ app.js database.js generator.js logger.js router.js server.js"
   },
   "keywords": [
     "nodejs",
@@ -19,6 +19,7 @@
   "dependencies": {
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "express-validator": "^6.14.2",
     "mongoose": "^6.5.0",
     "morgan": "^1.10.0",
     "pino": "^8.3.1",

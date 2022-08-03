@@ -23,7 +23,7 @@ services:
       HTTP_HOST: 0.0.0.0
       PORT: 8080
       LOG_LEVEL: debug
-      DATABASE_URL: mongodb://mongo_db:27017/mvc  
+      DATABASE_URL: mongodb://mongo_db:27017/tasty  
     depends_on:
       - mongo_db
 

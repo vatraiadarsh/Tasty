@@ -22,7 +22,7 @@ function transformModel(modelName) {
 }
 
 function makeController(modelName) {
-	let crudTemplate = fs.readFileSync('./templates/Controller.tpl', 'utf8');
+	let crudTemplate = fs.readFileSync('./core/templates/Controller.tpl', 'utf8');
 
 	let {
 		modelNameSingularLowerCase,
@@ -44,7 +44,7 @@ function makeController(modelName) {
 }
 
 function makeRoute(modelName) {
-	let routeTemplate = fs.readFileSync('./templates/Route.tpl', 'utf8');
+	let routeTemplate = fs.readFileSync('./core/templates/Route.tpl', 'utf8');
 
 	let {
 		modelNameSingularLowerCase,
@@ -66,7 +66,7 @@ function makeRoute(modelName) {
 }
 
 function makeModel(modelName) {
-	let modelTemplate = fs.readFileSync('./templates/Model.tpl', 'utf8');
+	let modelTemplate = fs.readFileSync('./core/templates/Model.tpl', 'utf8');
 
 	let { modelNameSingularUpperCaseFirst } = transformModel(modelName);
 	modelTemplate = modelTemplate.replace(/\[Model\]/g, modelNameSingularUpperCaseFirst);
@@ -98,20 +98,35 @@ function appendToRouter(modelName) {
 	fs.writeFileSync('./router.js', routerFile);
 }
 
+function makeValidator(modelName) {
+	let validatorTemplate = fs.readFileSync('./core/templates/Validator.tpl', 'utf8');
+
+	let { modelNameSingularLowerCase } = transformModel(modelName);
+	validatorTemplate = validatorTemplate.replace(/\[model\]/g, modelNameSingularLowerCase);
+
+	if (!fs.existsSync(`./Validators`)) {
+		fs.mkdirSync(`./Validators`);
+	}
+
+	fs.writeFileSync(`./Validators/${modelNameSingularLowerCase}Validator.js`, validatorTemplate);
+}
+
 function printStatement(modelName) {
-	let { modelNameSingularUpperCaseFirst } = transformModel(modelName);
+	let { modelNameSingularUpperCaseFirst, modelNameSingularLowerCase } = transformModel(modelName);
 	console.log(`
-		\x1b[32m✔\x1b[0m Generated ${modelName}Controller.js
-		\x1b[32m✔\x1b[0m Generated ${modelName}Route.js
 		\x1b[32m✔\x1b[0m Generated ${modelNameSingularUpperCaseFirst}.js
+		\x1b[32m✔\x1b[0m Generated ${modelName}Controller.js
+		\x1b[32m✔\x1b[0m Configured ${modelNameSingularLowerCase}Validator.js
+		\x1b[32m✔\x1b[0m Generated ${modelName}Route.js
 		\x1b[32m✔\x1b[0m Configured ${modelName}Route to Router.js
 		`);
 }
 
 function automate(modelName) {
-	makeController(modelName);
-	makeRoute(modelName);
 	makeModel(modelName);
+	makeController(modelName);
+	makeValidator(modelName);
+	makeRoute(modelName);
 	appendToRouter(modelName);
 	printStatement(modelName);
 }
