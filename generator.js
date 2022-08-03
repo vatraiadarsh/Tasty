@@ -89,7 +89,6 @@ function appendToRouter(modelName) {
 		return;
 	}
 
-	// append to top of router.js
 	routerFile = routerImport + '\n' + routerFile;
 	fs.writeFileSync('./router.js', routerFile);
 
@@ -140,7 +139,21 @@ if (process.argv.length === 3) {
 		automate(modelName);
 	});
 } else {
-	console.log('usage: node generator.js [modelName]');
-	console.log('usage: node generator.js [modelName] [modelName] [modelName] ...');
+	const usageText = `
+	generator helps you to automate the creation of models, controllers, validators and configures the routes.
+  
+	usage:
+	  node generator <command>
+  
+	commands can be:
+  
+	[modelName] : used to create a new model, controller, validator & configures the route to router.js file
+	[modelName] [modelName] [modelName] ... : used to create multiple model, controller, validator & configures all the routes to router.js file
+	`;
+
+	console.log('\x1b[34m' + usageText + '\x1b[0m');
 	process.exit(1);
 }
+
+// node generator make Controller:UserController
+
